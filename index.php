@@ -16,7 +16,12 @@ spl_autoload_register(function ($className)
 
 require_once dirname(__DIR__) . '\bierkopf\vendor\autoload.php';
 
-$base = new \Controller\Base();
+$loader = new Twig_Loader_Filesystem( dirname(__DIR__) . '\bierkopf\Assets');
+$twig = new Twig_Environment(
+    $loader,
+    array( 'cache' => '/path/to/compilation_cache',)
+);
 
+$base = new \Controller\Base($twig);
 $base->init();
 

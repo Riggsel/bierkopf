@@ -4,32 +4,28 @@ namespace Controller;
 
 use Entity\Table;
 use Entity\Cards;
+use Twig\Environment;
 
 class Base
 {
     private $table;
-
+    private $twig;
+    
+    public function __construct(Environment $twig)
+    {
+        $this->twig = $twig;
+    }
+    
     public function init()
     {
-        $loader = new Twig_Loader_Filesystem( dirname(__DIR__) . '\bierkopf\Assets');
-        $twig = new Twig_Environment(
-            $loader,
-            array( 'cache' => '/path/to/compilation_cache',)
-        );
-
-        echo $twig->render('index.html', array('name' => 'Fabien'));
-
-
         $this->table = new Table();
-
-        include(dirname(__DIR__) . "\Assets\index.html");
+        
+        $players = new \Players();
         
         $cards = new Cards();
         $allCards = $cards->getAll();
-        var_dump($allCards);
-        foreach ($allCards as $color => $card) {
-            
-        }
+
+        echo $this->twig->render('index.html', array('allCards' => $allCards));
     }
     
     public function setPost()
