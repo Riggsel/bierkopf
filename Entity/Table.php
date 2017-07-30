@@ -15,6 +15,11 @@ class Table
     const MAX_PLAYERS = 4;
     const GAME_TYPE = 'CROSS';
 
+    public function start()
+    {
+        
+    }
+    
     public function getMaxPlayers()
     {
         return self::MAX_PLAYERS;

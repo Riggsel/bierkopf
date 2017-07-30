@@ -14,4 +14,9 @@ spl_autoload_register(function ($className)
     }
 });
 
+require_once dirname(__DIR__) . '\bierkopf\vendor\autoload.php';
+
 $base = new \Controller\Base();
+
+$base->init();
+

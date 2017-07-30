@@ -1,7 +1,10 @@
 <?php
+namespace Entity;
 
 class Cards
 {
+    private $assetsPath;
+    
     private $cardCounts = array(
         'Ass' => array(
             'value' => 11,
@@ -11,7 +14,7 @@ class Cards
             'value' => 10,
             'base_power' => 3,
         ),
-        'König' => array(
+        'KÃ¶nig' => array(
             'value' => 4,
             'base_power' => 2,
         ),
@@ -35,7 +38,12 @@ class Cards
         'Blatt' => 12,
         'Schellen' => 6,
     );
-
+    
+    public function __construct()
+    {
+        $this->assetsPath = "%s\Assets\Images\Cards\%s_%s.png";
+    }
+    
     public function getAll()
     {
         $allCards = [];
@@ -43,7 +51,8 @@ class Cards
 
             foreach ($this->cardCounts as $cardName => $cardCount) {
                 $cardCount['power'] = $colorPower * $cardCount['base_power'];
-
+                $cardCount['image'] = $this->getCardImage($colorName, $cardName);
+                
                 $allCards[$colorName][$cardName] = $cardCount;
             }
         }
@@ -53,5 +62,12 @@ class Cards
         }
 
         return $allCards;
+    }
+    
+    private function getCardImage($colorName, $cardName)
+    {
+        $imageName = sprintf($this->assetsPath, dirname(__DIR__), $colorName, $cardName);
+        
+       return "<img src='{$imageName}' name='{$colorName}_{$cardName}' />";
     }
 }
