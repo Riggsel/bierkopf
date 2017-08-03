@@ -1,0 +1,22 @@
+{% if player %}
+
+    <table style="width: 100%;">
+        <tr>
+            <td colspan="6">Spieler {{ player.position }}</td>
+        </tr>
+        {% if player.cards %}
+            {% for card in player.cards %}
+                <tr>
+                    <td>
+                        {{ card.image }}
+                        <img id="{{ player.id}}_{{ card.name }}" src="{{ card.image}}" name="{{ card.name }}" />
+                        <input type="hidden" name="cardName" value="{{ player.id }}" />
+                        <input type="hidden" name="cardName" value="{{ card.name }}" />
+                        <input type="hidden" name="cardValue" value="{{ card.value }}" />
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+
+{% endif %}

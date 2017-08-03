@@ -1,6 +1,8 @@
 <?php
 namespace Entity;
 
+use Entity\Players;
+
 class Cards
 {
     private $assetsPath;
@@ -38,12 +40,25 @@ class Cards
         'Blatt' => 12,
         'Schellen' => 6,
     );
-    
-    public function __construct()
+
+    const ASSETS_PATH = "%s\Assets\Images\Cards\%s_%s.png";
+
+    public function dishOut(Players $players)
     {
-        $this->assetsPath = "%s\Assets\Images\Cards\%s_%s.png";
+        $cardPiles = array_chunk(
+            $this->getAll(),
+            $players->getMaxPlayers()
+        );
+
+        foreach ($cardPiles as $pile) {
+            foreach ($players->getPlayers() as $player) {
+                $player->setCards($pile);
+            }
+        }
+
+        return $players;
     }
-    
+
     public function getAll()
     {
         $allCards = [];
@@ -52,7 +67,7 @@ class Cards
             foreach ($this->cardCounts as $cardName => $cardCount) {
                 $cardCount['power'] = $colorPower * $cardCount['base_power'];
                 $cardCount['image'] = $this->getCardImage($colorName, $cardName);
-                
+
                 $allCards[$colorName][$cardName] = $cardCount;
             }
         }
@@ -66,8 +81,11 @@ class Cards
     
     private function getCardImage($colorName, $cardName)
     {
-        $imageName = sprintf($this->assetsPath, dirname(__DIR__), $colorName, $cardName);
-        
-       return "<img src='{$imageName}' name='{$colorName}_{$cardName}' />";
+        return sprintf(
+            self::ASSETS_PATH,
+            dirname(__DIR__),
+            $colorName,
+            $cardName
+        );
     }
 }

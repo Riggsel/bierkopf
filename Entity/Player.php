@@ -4,9 +4,53 @@ class Player
 {
     private $isBot;
     private $isHuman;
+    private $name;
+    private $points;
     private $cards;
     private $hasTurn;
     private $statistics;
+
+    /**
+     * @param array $credentials
+     */
+    public function __construct(array $credentials)
+    {
+        if (isset($credentials['name'])) {
+            $this->setName($credentials['name']);
+        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @param mixed $name
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPoints()
+    {
+        return $this->points;
+    }
+
+    /**
+     * @param mixed $points
+     */
+    public function setPoints($points)
+    {
+        $this->points = $points;
+    }
 
     /**
      * @return mixed
