@@ -3,21 +3,22 @@
 namespace Entity;
 
 use Entity\Players;
+use Controller\Base;
 
-class Table
+class Table extends Base
 {
     private $round;
-
     private $players;
-
+    private $cards;
     private $teams;
 
     const MAX_PLAYERS = 4;
+    const MAX_CARDS_ON_TABLE = 4;
     const GAME_TYPE = 'CROSS';
 
     public function start()
     {
-        
+
     }
     
     public function getMaxPlayers()
@@ -76,5 +77,23 @@ class Table
     public function setTeams($teams)
     {
         $this->teams = $teams;
+    }
+
+    /**
+     * @param array $card
+     */
+    public function setCard($card)
+    {
+        if (count($this->cards) == self::MAX_CARDS_ON_TABLE) {
+            echo 'Maximale Anzahl an Karten erreicht';
+            return $this->cards;
+        }
+
+        $this->cards[] = $card;
+    }
+
+    public function getCards()
+    {
+        return $this->cards;
     }
 }

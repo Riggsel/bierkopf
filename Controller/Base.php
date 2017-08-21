@@ -13,40 +13,51 @@ class Base
     private $table;
     private $twig;
 
-    public function __construct(Environment $twig)
+    public function setTemplateEngine(Environment $twig)
     {
         $this->twig = $twig;
     }
 
     public function init()
     {
-        $this->table = new Table();
-
-        $players = new Players();
-        $players->createNewPlayer(
-            array('name' => 'kevin'),
-            false
-        );
-
-        $cards = new Cards();
-        $players = $cards->dishOut($players);
-
-        echo $this->twig->render('index.html', array('players' => $players));
+        if (!empty($_POST)) {
+            $this->setPlayers();
+        } else {
+            echo $this->twig->render('index.html', array());
+        }
     }
 
-    public function setPost()
+    public function setPlayers()
     {
-        $testData = array(
-            "players" => array(
-                ""
-            ),
+        $players = new Players();
+        foreach ($_POST['players'] as $player) {
+            if (is_array($player)) {
+                $players->addPlayer($player);
+            }
+        }
+
+        $cards = new Cards();
+
+        $players = $cards->dishOut($players);
+
+        echo $this->twig->render('index.html',
+            array(
+                "players" => $players->getPlayers(),
+                "game_started" => true
+            )
         );
+    }
 
-        $table = new Table();
-        $table->setRound($testData["round"]);
-        $table->setPlayers($testData['players']);
+    public function cardAction($request, $round)
+    {
+        if (empty($request) || empty($request["card"])) {
+            echo "Kein Spieler gesetzt";
+            return;
+        }
 
-        $table->start();
+        $card = new Card();
+
+        $this->table->setCard($request["card"]);
     }
 
 }

@@ -10,7 +10,7 @@ class Players
 
     const MAX_PLAYERS = 4;
 
-    public function createNewPlayer(array $credentials, $isBot = true)
+    public function addPlayer(array $credentials, $isBot = true)
     {
         if (empty($credentials)) {
             echo "Fehlende Spielerdaten.";
@@ -22,13 +22,16 @@ class Players
             return false;
         }
 
-        $this->players[] = new Player($credentials);
+        $this->players[] = new Player(
+            $credentials,
+            $credentials["name"] == "bot"
+        );
 
         return true;
     }
 
     /**
-     * @return arrayr
+     * @return array
      */
     public function getPlayers()
     {

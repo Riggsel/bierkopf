@@ -1,5 +1,6 @@
 <?php
 
+
 spl_autoload_register(function ($className)
 {
     $ds = DIRECTORY_SEPARATOR;
@@ -14,14 +15,17 @@ spl_autoload_register(function ($className)
     }
 });
 
-require_once dirname(__DIR__) . '\bierkopf\vendor\autoload.php';
+require_once dirname(__DIR__) . '/bierkopf/vendor/autoload.php';
 
-$loader = new Twig_Loader_Filesystem( dirname(__DIR__) . '\bierkopf\Assets');
+$loader = new Twig_Loader_Filesystem( dirname(__DIR__) . '/bierkopf/Assets');
+
 $twig = new Twig_Environment(
     $loader,
-    array( 'cache' => '/path/to/compilation_cache',)
+    array()
 );
 
-$base = new \Controller\Base($twig);
+
+$base = new \Controller\Base();
+$base->setTemplateEngine($twig);
 $base->init();
 

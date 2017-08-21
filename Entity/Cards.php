@@ -6,7 +6,7 @@ use Entity\Players;
 class Cards
 {
     private $assetsPath;
-    
+
     private $cardCounts = array(
         'Ass' => array(
             'value' => 11,
@@ -16,7 +16,7 @@ class Cards
             'value' => 10,
             'base_power' => 3,
         ),
-        'König' => array(
+        'Koenig' => array(
             'value' => 4,
             'base_power' => 2,
         ),
@@ -41,19 +41,18 @@ class Cards
         'Schellen' => 6,
     );
 
-    const ASSETS_PATH = "%s\Assets\Images\Cards\%s_%s.png";
+    const ASSETS_PATH = "\Assets\Images\Cards\%s_%s.png";
+    const CARD_PILES = 6;
 
     public function dishOut(Players $players)
     {
         $cardPiles = array_chunk(
             $this->getAll(),
-            $players->getMaxPlayers()
+            self::CARD_PILES
         );
 
-        foreach ($cardPiles as $pile) {
-            foreach ($players->getPlayers() as $player) {
-                $player->setCards($pile);
-            }
+        foreach ($players->getPlayers() as $key => $player) {
+            $player->setCards($cardPiles[$key]);
         }
 
         return $players;
@@ -68,7 +67,7 @@ class Cards
                 $cardCount['power'] = $colorPower * $cardCount['base_power'];
                 $cardCount['image'] = $this->getCardImage($colorName, $cardName);
 
-                $allCards[$colorName][$cardName] = $cardCount;
+                $allCards[] = $cardCount;
             }
         }
 

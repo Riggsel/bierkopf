@@ -9,26 +9,25 @@
         <div id="head_section">
             
         </div>
-        <div style="width:600;height: 600px;">
-            Spieler Name: <br />
-            <input type="text" name="player_1" value="" />;
-        </div>
-        <div id="table_section" style="display:none;width: 100%; height: 100%">
+        {% if game_started %}
+
+        <div id="table_section" style="width: 100%; height: 100%">
             <table border="1" style="width: 100%; height: 100%;">
                 <tr>
                     <td></td>
                     <td>
                         <table  style="width: 100%;">
                             <tr>
-                                <td colspan="6">Spieler Oben</td>
+                                <td colspan="6">Spieler {{ players[0].name }}</td>
                             </tr>
                             <tr>
-                                <td>Karte 1</td>
-                                <td>Karte 2</td>
-                                <td>Karte 3</td>
-                                <td>Karte 4</td>
-                                <td>Karte 5</td>
-                                <td>Karte 6</td>
+
+                                {% for card in players[0].cards %}
+                                    <td><img src="{{ card.image }}" name="" /></td>
+                                    <input type="hidden" value="{{ card.power }}" name="card_power" />
+                                    <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
+                                    <input type="hidden" value="{{ card.value }}" name="card_value" />
+                                {% endfor %}
                             </tr>
                         </table>
                     </td>
@@ -38,15 +37,15 @@
                     <td>
                         <table  style="width: 100%;">
                             <tr>
-                                <td colspan="6">Spieler Links</td>
+                                <td colspan="6">Spieler {{ players[1].name }}</td>
                             </tr>
                             <tr>
-                                <td>Karte 1</td>
-                                <td>Karte 2</td>
-                                <td>Karte 3</td>
-                                <td>Karte 4</td>
-                                <td>Karte 5</td>
-                                <td>Karte 6</td>
+                                {% for card in players[1].cards %}
+                                <td><img src="{{ card.image }}" name="" /></td>
+                                <input type="hidden" value="{{ card.power }}" name="card_power" />
+                                <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
+                                <input type="hidden" value="{{ card.value }}" name="card_value" />
+                                {% endfor %}
                             </tr>
                         </table>
                     </td>
@@ -68,15 +67,15 @@
                     <td>
                         <table  style="width: 100%;">
                             <tr>
-                                <td colspan="6">Spieler Rechts</td>
+                                <td colspan="6">Spieler {{ players[2].name }}</td>
                             </tr>
                             <tr>
-                                <td>Karte 1</td>
-                                <td>Karte 2</td>
-                                <td>Karte 3</td>
-                                <td>Karte 4</td>
-                                <td>Karte 5</td>
-                                <td>Karte 6</td>
+                                {% for card in players[2].cards %}
+                                <td><img src="{{ card.image }}" name="" /></td>
+                                <input type="hidden" value="{{ card.power }}" name="card_power" />
+                                <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
+                                <input type="hidden" value="{{ card.value }}" name="card_value" />
+                                {% endfor %}
                             </tr>
                         </table>
                     </td>
@@ -86,21 +85,32 @@
                     <td>
                         <table  style="width: 100%;">
                             <tr>
-                                <td colspan="6">Spieler Unten</td>
+                                <td colspan="6">Spieler {{ players[3].name }}</td>
                             </tr>
                             <tr>
-                                <td>Karte 1</td>
-                                <td>Karte 2</td>
-                                <td>Karte 3</td>
-                                <td>Karte 4</td>
-                                <td>Karte 5</td>
-                                <td>Karte 6</td>
+                                {% for card in players[3].cards %}
+                                <td><img src="{{ card.image }}" name="" /></td>
+                                <input type="hidden" value="{{ card.power }}" name="card_power" />
+                                <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
+                                <input type="hidden" value="{{ card.value }}" name="card_value" />
+                                {% endfor %}
                             </tr>
                         </table>
                     </td>
                     <td></td>
                 </tr>
             </table>
+            {% else %}
+            <form action="" method="post">
+                <div style="padding:20px;position:fixed;left:40%; top:40%;margin:auto;width:200px;border:1px solid;text-align: center;">
+                    Spieler Name
+                    <input type="text" name="players[][name]" value="" />
+                    <input type="hidden" name="players[][name]" value="bot" />
+                    <input type="hidden" name="players[][name]" value="bot" />
+                    <input type="hidden" name="players[][name]" value="bot" />
+                </div>
+            </form>
+            {% endif %}
         </div>
     </body>
 </html>

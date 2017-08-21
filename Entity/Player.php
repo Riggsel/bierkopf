@@ -1,5 +1,7 @@
 <?php
 
+namespace Entity;
+
 class Player
 {
     private $isBot;
@@ -12,12 +14,16 @@ class Player
 
     /**
      * @param array $credentials
+     * @param bool $isBot
      */
-    public function __construct(array $credentials)
+    public function __construct(array $credentials, $isBot = true)
     {
         if (isset($credentials['name'])) {
             $this->setName($credentials['name']);
         }
+
+        $this->setIsBot($isBot);
+        $this->setIsHuman(false == $isBot);
     }
 
     /**
