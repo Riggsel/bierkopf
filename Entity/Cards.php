@@ -2,6 +2,7 @@
 namespace Entity;
 
 use Entity\Players;
+use Entity\Card;
 
 class Cards
 {
@@ -64,10 +65,14 @@ class Cards
         foreach ($this->cardColors as $colorName => $colorPower) {
 
             foreach ($this->cardCounts as $cardName => $cardCount) {
-                $cardCount['power'] = $colorPower * $cardCount['base_power'];
-                $cardCount['image'] = $this->getCardImage($colorName, $cardName);
+                $card = new Card();
+                $card->setId($colorName . '_' . $cardName);
+                $card->setPower($colorPower * $cardCount['base_power']);
+                $card->setValue($cardCount['value']);
+                $card->setBasePower($cardCount['base_power']);
+                $card->setImage($this->getCardImage($colorName, $cardName));
 
-                $allCards[] = $cardCount;
+                $allCards[] = $card;
             }
         }
 
@@ -82,9 +87,13 @@ class Cards
     {
         return sprintf(
             self::ASSETS_PATH,
-            dirname(__DIR__),
             $colorName,
             $cardName
         );
+    }
+
+    public function setCard()
+    {
+
     }
 }

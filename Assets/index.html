@@ -6,6 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body style="margin:auto;width: 900px;height: 900px;">
+    <script src="Assets/Js/jquery-3.2.1.min.js"></script>
         <div id="head_section">
             
         </div>
@@ -23,7 +24,7 @@
                             <tr>
 
                                 {% for card in players[0].cards %}
-                                    <td><img src="{{ card.image }}" name="" /></td>
+                                    <td id="{{ card.id }}"><img src="{{ card.image }}" name="" /></td>
                                     <input type="hidden" value="{{ card.power }}" name="card_power" />
                                     <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
                                     <input type="hidden" value="{{ card.value }}" name="card_value" />
@@ -41,7 +42,7 @@
                             </tr>
                             <tr>
                                 {% for card in players[1].cards %}
-                                <td><img src="{{ card.image }}" name="" /></td>
+                                <td id="{{ card.id }}"><img src="{{ card.image }}" name="" /></td>
                                 <input type="hidden" value="{{ card.power }}" name="card_power" />
                                 <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
                                 <input type="hidden" value="{{ card.value }}" name="card_value" />
@@ -71,7 +72,7 @@
                             </tr>
                             <tr>
                                 {% for card in players[2].cards %}
-                                <td><img src="{{ card.image }}" name="" /></td>
+                                <td id="{{ card.id }}"><img src="{{ card.image }}" name="" /></td>
                                 <input type="hidden" value="{{ card.power }}" name="card_power" />
                                 <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
                                 <input type="hidden" value="{{ card.value }}" name="card_value" />
@@ -89,7 +90,7 @@
                             </tr>
                             <tr>
                                 {% for card in players[3].cards %}
-                                <td><img src="{{ card.image }}" name="" /></td>
+                                <td class="card_action" id="{{ card.id }}"><img src="{{ card.image }}" name="" /></td>
                                 <input type="hidden" value="{{ card.power }}" name="card_power" />
                                 <input type="hidden" value="{{ card.base_power }}" name="card_base_power" />
                                 <input type="hidden" value="{{ card.value }}" name="card_value" />
@@ -113,4 +114,19 @@
             {% endif %}
         </div>
     </body>
+    <script type="text/javascript">
+        $('.card_action').on(
+            'click',
+            function() {
+                addToTable($(this).parent());
+            })
+
+        function addToTable(inputs)
+        {
+            console.log(inputs);
+            $.ajax(
+
+            )
+        }
+    </script>
 </html>
